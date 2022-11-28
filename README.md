@@ -11,21 +11,17 @@ For this project, we will be using data from the [Waymo Open dataset](https://wa
 ### Data
 
 The data you will use for training, validation and testing is organized as follow:
-```
-/home/workspace/data/waymo
-    - training_and_validation - contains 97 files to train and validate your models
+
+/home/workspace/
     - train: contain the train data (empty to start)
     - val: contain the val data (empty to start)
     - test - contains 3 files to test your model and create inference videos
-```
 
-The `training_and_validation` folder contains file that have been downsampled: we have selected one every 10 frames from 10 fps videos. The `testing` folder contains frames from the 10 fps video without downsampling.
 
-You will split this `training_and_validation` data into `train`, and `val` sets by completing and executing the `create_splits.py` file.
 
 ### Experiments
 The experiments folder will be organized as follow:
-```
+
 experiments/
     - pretrained_model/
     - exporter_main_v2.py - to create an inference model
@@ -36,7 +32,6 @@ experiments/
     - experiment2/ - create a new folder for each experiment you run
     - label_map.pbtxt
     ...
-```
 
 ## Prerequisites
 
@@ -141,20 +136,44 @@ python inference_video.py --labelmap_path label_map.pbtxt --model_path experimen
 ## Submission Template
 
 ### Project overview
-This section should contain a brief description of the project and what we are trying to achieve. Why is object detection such an important component of self driving car systems?
+The aim of this project is to classify and detect cars, pedestrians and cyclists according to a set of images from a camera inputs.Object detection is an important part for self-driving cars. To ensure the safe running of vehicules at high speed, real-time and accurate detection of all the objects on the road is required.
 
-### Set up
+### Set up 
 This section should contain a brief description of the steps to follow to run the code for this repository.
 
 ### Dataset
+I used the Udacity workspace which contains already the data processed ready to use 
 #### Dataset analysis
-This section should contain a quantitative and qualitative description of the dataset. It should include images, charts and other visualizations.
-#### Cross validation
-This section should detail the cross validation strategy and justify your approach.
+Exploring dataset 
+
+I implement the display_images function. This function takes a batch as an input and display an image with its corresponding bounding boxes. The classes are color coded (eg, vehicles in red, pedestrians in blue, cyclist in green). The result of this function: 
+http://0.0.0.0:3002/view/images/groundtruth1.png
+http://0.0.0.0:3002/view/images/groundtruth2.png
+http://0.0.0.0:3002/view/images/groundtruth3.png
+http://0.0.0.0:3002/view/images/groundtruth4.png
+http://0.0.0.0:3002/view/images/groundtruth5.png
+http://0.0.0.0:3002/view/images/groundtruth6.png
+
+Data Analysis
+
+I have used random 20000 samples from dataset to analyse. 
+This plot shows the distribution of classes (Carsn Pedestrians and cyclists)
+http://0.0.0.0:3002/view/images/DataAnalysis.png
 
 ### Training
 #### Reference experiment
-This section should detail the results of the reference experiment. It should includes training metrics and a detailed explanation of the algorithm's performances.
+See training section above
+run this command to see tesorboard result: tensorboard dev upload --logdir \
+    'experiments/reference/'
 
 #### Improve on the reference
-This section should highlight the different strategies you adopted to improve your model. It should contain relevant figures and details of your findings.
+After exploring the Object Detection API, i have used various augmentation strategies: 
+1. random_adjust_brightness
+2. random_adjust_contrast
+3. random_adjust_hue
+4. random_adjust_saturation
+5. random_distort_color
+
+I updated pipeline_new.config file with augmentation startegies, but i couldn't launch training and show new results because i had No Space left in device issue. 
+I have done the reset data for workspace, empty the trash, contacted support and mentor but the problem was not resolved. 
+So, i submit the project in the status because i'm blocked and i will have to much delay. Thanks
